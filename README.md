@@ -1,2 +1,0 @@
-# Casual-NaviSpade-TestTask
- 
