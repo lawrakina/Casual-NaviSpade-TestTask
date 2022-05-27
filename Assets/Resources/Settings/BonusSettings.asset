@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BonusSettings
   m_EditorClassIdentifier: 
   CountBonusesAfterStart: 5
-  BonusPrefab: {fileID: 8922420928762696335, guid: 1fbac9acaec4cce4a8d26552ca36d2e4, type: 3}
+  BonusPrefab: {fileID: 2820200718884109239, guid: 1fbac9acaec4cce4a8d26552ca36d2e4, type: 3}
   DeltaTimeBeforeInstantiateBonus: 3

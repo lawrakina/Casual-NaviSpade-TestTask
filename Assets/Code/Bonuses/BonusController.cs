@@ -9,10 +9,11 @@ namespace Code.Bonuses{
     public class BonusController: IExecute{
         private BonusView _view;
         public Action<BonusController> OnCollisionOnPlayer;
+        public Action<BonusController> OnDestroy;
 
         public BonusController(BonusView bonusPrefab){
             _view = Extentions.SpawnObject(Extentions.GetEmptyPoint(), bonusPrefab);
-            _view.Init(CollisionOnObject);
+            _view.Init(CollisionOnObject, Destroy);
         }
 
         private void CollisionOnObject(Collision info){
@@ -21,6 +22,10 @@ namespace Code.Bonuses{
                 player.GetUpBonus();
                 OnCollisionOnPlayer?.Invoke(this);
             }
+        }
+
+        private void Destroy(){
+            OnDestroy?.Invoke(this);
         }
 
         public void Execute(float deltaTime){

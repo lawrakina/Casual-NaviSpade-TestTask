@@ -17,6 +17,11 @@ namespace Code.Player{
             AnimatorParameters = new AnimatorParameters(GetComponent<Animator>());
         }
 
+        public void Init(Action onGetUpBonus, Action onCollisionWithEnemy){
+            _onGetUpBonus = onGetUpBonus;
+            _onCollisionWithEnemy = onCollisionWithEnemy;
+        }
+
         public void MoveTo(Vector3 position){
             Agent.SetDestination(position);
         }
@@ -25,9 +30,8 @@ namespace Code.Player{
             _onGetUpBonus?.Invoke();
         }
 
-        public void Init(Action onGetUpBonus, Action onCollisionWithEnemy){
-            _onGetUpBonus = onGetUpBonus;
-            _onCollisionWithEnemy = onCollisionWithEnemy;
+        public void Damage(){
+            _onCollisionWithEnemy?.Invoke();
         }
     }
 }

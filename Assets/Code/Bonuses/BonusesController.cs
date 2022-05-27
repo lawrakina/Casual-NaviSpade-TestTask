@@ -34,12 +34,15 @@ namespace Code.Bonuses{
 
         private void CreateNewBonus(){
             var bonusController = new BonusController(_bonusSettings.BonusPrefab);
-            bonusController.OnCollisionOnPlayer += OnCollisionOnPlayer;
+            bonusController.OnCollisionOnPlayer += OnDestroyBonus;
+            bonusController.OnDestroy += OnDestroyBonus;
             _bonuses.Add(bonusController);
         }
 
-        private void OnCollisionOnPlayer(BonusController controller){
-            controller.OnCollisionOnPlayer -= OnCollisionOnPlayer;
+
+        private void OnDestroyBonus(BonusController controller){
+            controller.OnCollisionOnPlayer -= OnDestroyBonus;
+            controller.OnDestroy -= OnDestroyBonus;
             _bonuses.Remove(controller);
         }
     }
