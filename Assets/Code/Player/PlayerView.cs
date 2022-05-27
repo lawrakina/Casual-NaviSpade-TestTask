@@ -1,11 +1,14 @@
 ﻿using System;
+using Code.Units;
 using UnityEngine;
 using UnityEngine.AI;
 
 
 namespace Code.Player{
     [RequireComponent(typeof(NavMeshAgent))] [RequireComponent(typeof(Animator))]
-    internal class PlayerView : MonoBehaviour, IMovable{
+    public class PlayerView : MonoBehaviour, IPlayer, IMovable{
+        private Action _onGetUpBonus;
+        private Action _onCollisionWithEnemy;
         public NavMeshAgent Agent{ get; set; }
         public AnimatorParameters AnimatorParameters{ get; set; }
 
@@ -17,18 +20,14 @@ namespace Code.Player{
         public void MoveTo(Vector3 position){
             Agent.SetDestination(position);
         }
-    }
 
-    internal class AnimatorParameters{
-        private readonly Animator _animator;
-        private static readonly int IsRun = Animator.StringToHash("IsRun");
-
-        public AnimatorParameters(Animator animator){
-            _animator = animator;
+        public void GetUpBonus(){
+            _onGetUpBonus?.Invoke();
         }
 
-        public bool Run{
-            set{ _animator.SetBool(IsRun, value); }
+        public void Init(Action onGetUpBonus, Action onCollisionWithEnemy){
+            _onGetUpBonus = onGetUpBonus;
+            _onCollisionWithEnemy = onCollisionWithEnemy;
         }
     }
 }

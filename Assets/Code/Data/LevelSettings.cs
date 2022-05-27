@@ -3,7 +3,7 @@
 
 namespace Code.Data{
     [CreateAssetMenu(fileName = nameof(LevelSettings), menuName = "Settings/" + nameof(LevelSettings))]
-    internal class LevelSettings : ScriptableObject{
+    public class LevelSettings : ScriptableObject{
         [SerializeField]
         public float Width = 20f;
         [SerializeField]

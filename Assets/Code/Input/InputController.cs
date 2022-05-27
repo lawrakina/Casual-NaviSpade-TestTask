@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using Code.Data;
+using UnityEngine;
 
 
 namespace Code.Input{
-    public class InputController : MonoBehaviour{
-        [SerializeField]
+    public sealed class InputController : IExecute{
         private InputModel _inputModel;
 
-        private void Update(){
+        public InputController(InputModel inputModel){
+            _inputModel = inputModel;
+        }
+
+        public void Execute(float deltaTime){
             if (UnityEngine.Input.GetMouseButtonDown(0) || UnityEngine.Input.touchCount == 1){
                 Vector3 mouse = UnityEngine.Input.mousePosition;
                 Ray castPoint = Camera.main.ScreenPointToRay(mouse);

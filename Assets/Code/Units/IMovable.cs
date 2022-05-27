@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace Code.Player{
+namespace Code.Units{
     internal interface IMovable{
         void MoveTo(Vector3 position);
     }
