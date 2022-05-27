@@ -1,4 +1,5 @@
 ﻿using System;
+using Code.Bonuses;
 using Code.Extensions;
 using Code.Input;
 using Code.Player;
@@ -44,9 +45,5 @@ namespace Code.Enemies{
                 SetDestination();
             }
         }
-    }
-
-    internal interface IBonus{
-        void Destroy();
     }
 }
