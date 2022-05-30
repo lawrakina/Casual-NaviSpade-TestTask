@@ -1,4 +1,5 @@
 ﻿using System;
+using Code.Player;
 using Code.Units;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,14 +8,14 @@ using UnityEngine.AI;
 namespace Code.Enemies{
     [RequireComponent(typeof(NavMeshAgent))]
     public sealed class EnemyView : MonoBehaviour, IMovable{
-        private Action<Collision> _collisionOnObject;
+        private Action<GameObject> _collisionOnObject;
         private NavMeshAgent Agent{ get; set; }
 
         private void Awake(){
             Agent = GetComponent<NavMeshAgent>();
         }
 
-        public void Init(float speedMoving, Action<Collision> collisionOnObject){
+        public void Init(float speedMoving, Action<GameObject> collisionOnObject){
             Agent.speed = speedMoving;
             _collisionOnObject = collisionOnObject;
         }
@@ -24,7 +25,12 @@ namespace Code.Enemies{
         }
 
         private void OnCollisionEnter(Collision other){
-            _collisionOnObject?.Invoke(other);
+            Debug.Log($"Enemy collision: {other.gameObject}");
+            _collisionOnObject?.Invoke(other.gameObject);
+        }
+
+        private void OnTriggerEnter(Collider other){
+            _collisionOnObject?.Invoke(other.gameObject);
         }
 
         public void DestroySelf(){

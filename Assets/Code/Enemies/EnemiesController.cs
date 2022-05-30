@@ -41,13 +41,13 @@ namespace Code.Enemies{
             var enemyController = new EnemyController(
                 _arealsOfEnemies[Random.Range(0, _arealsOfEnemies.Count)].transform.position,
                 _enemySettings.EnemyPrefab, _enemySettings.SpeedMoving, _enemySettings.TimeToNewGoal);
-            enemyController.OnCollisionOnPlayer += OnCollisionOnPlayer;
+            // enemyController.OnCollisionOnPlayer += OnCollisionOnPlayer;
             _enemies.Add(enemyController);
         }
 
-        private void OnCollisionOnPlayer(EnemyController obj){
-            obj.OnCollisionOnPlayer -= OnCollisionOnPlayer;
-            _enemies.Remove(obj);
-        }
+        // private void OnCollisionOnPlayer(EnemyController obj){
+            // obj.OnCollisionOnPlayer -= OnCollisionOnPlayer;
+            // _enemies.Remove(obj);
+        // }
     }
 }

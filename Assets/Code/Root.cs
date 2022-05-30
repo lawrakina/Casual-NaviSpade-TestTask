@@ -45,11 +45,13 @@ namespace Code{
         private UiController _uiController;
 
         private List<IExecute> _executable;
+        private List<IFixedExecute> _fixedExecutable;
 
         #endregion
 
         private void Awake(){
             _executable = new List<IExecute>();
+            _fixedExecutable = new List<IFixedExecute>();
             Extensions.Extentions.Init(_levelSettings);
 
             _playerModel.Init(maxHp: _unitSettings.PlayerHp);
@@ -62,6 +64,7 @@ namespace Code{
 
             _executable.Add(_inputController);
             _executable.Add(_playerController);
+            _fixedExecutable.Add(_playerController);
             _executable.Add(_bonusController);
             _executable.Add(_enemiesController);
 
@@ -103,6 +106,12 @@ namespace Code{
         private void Update(){
             foreach (var execute in _executable){
                 execute?.Execute(Time.deltaTime);
+            }
+        }
+
+        private void FixedUpdate(){
+            foreach (var fixedExecute in _fixedExecutable){
+                fixedExecute?.FixedExecute(Time.fixedDeltaTime);
             }
         }
 

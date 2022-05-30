@@ -1,29 +1,28 @@
 ﻿using System;
-using Code.Units;
 using UnityEngine;
-using UnityEngine.AI;
 
 
 namespace Code.Player{
-    [RequireComponent(typeof(NavMeshAgent))] [RequireComponent(typeof(Animator))]
-    public class PlayerView : MonoBehaviour, IPlayer, IMovable{
+    [RequireComponent(typeof(CharacterController))] [RequireComponent(typeof(Animator))]
+    public class PlayerView : MonoBehaviour, IPlayer{
         private Action _onGetUpBonus;
         private Action _onCollisionWithEnemy;
-        public NavMeshAgent Agent{ get; set; }
+        
+        private Rigidbody _rigidbody;
+        private CharacterController _characterController;
+        
         public AnimatorParameters AnimatorParameters{ get; set; }
+        public Transform Transform => transform;
+        public CharacterController CharacterController => _characterController;
 
         private void Awake(){
-            Agent = GetComponent<NavMeshAgent>();
+            _characterController = GetComponent<CharacterController>();
             AnimatorParameters = new AnimatorParameters(GetComponent<Animator>());
         }
 
         public void Init(Action onGetUpBonus, Action onCollisionWithEnemy){
             _onGetUpBonus = onGetUpBonus;
             _onCollisionWithEnemy = onCollisionWithEnemy;
-        }
-
-        public void MoveTo(Vector3 position){
-            Agent.SetDestination(position);
         }
 
         public void GetUpBonus(){

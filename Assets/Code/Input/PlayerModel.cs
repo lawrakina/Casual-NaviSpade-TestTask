@@ -12,6 +12,7 @@ namespace Code.Input{
         public int HealthPoints{
             get => _healthPoints;
             set{
+                Debug.Log($"Change HP:{value}");
                 _healthPoints = value;
                 if (value >= MaxHealthPoints){
                     _healthPoints = MaxHealthPoints;

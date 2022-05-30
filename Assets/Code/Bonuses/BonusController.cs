@@ -8,6 +8,7 @@ using UnityEngine;
 namespace Code.Bonuses{
     public class BonusController: IExecute{
         private BonusView _view;
+        
         public Action<BonusController> OnCollisionOnPlayer;
         public Action<BonusController> OnDestroy;
 
@@ -25,6 +26,7 @@ namespace Code.Bonuses{
         }
 
         private void Destroy(){
+            _view.DestroySelf();
             OnDestroy?.Invoke(this);
         }
 

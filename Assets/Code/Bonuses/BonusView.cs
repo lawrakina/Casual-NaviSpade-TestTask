@@ -1,10 +1,9 @@
 ﻿using System;
-using Code.Enemies;
 using UnityEngine;
 
 
 namespace Code.Bonuses{
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody))] 
     [RequireComponent(typeof(CapsuleCollider))]
     public class BonusView : MonoBehaviour, IBonus{
         private Action<Collision> _collisionOnObject;

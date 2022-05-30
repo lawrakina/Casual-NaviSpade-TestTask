@@ -1,16 +1,17 @@
 ﻿using Code.Data;
 using Code.Extensions;
 using Code.Input;
-using Code.Units;
 using UnityEngine;
 
 
 namespace Code.Player{
-    public sealed class PlayerController : IExecute{
+    public sealed class PlayerController : IExecute, IFixedExecute{
         private readonly InputModel _inputModel;
         private readonly PlayerModel _playerModel;
         private readonly UnitSettings _unitSettings;
         private PlayerView _player;
+        private Vector3 _targetToMove;
+        private bool _move = false;
 
         public PlayerController(InputModel inputModel, PlayerModel playerModel, UnitSettings unitSettings){
             _inputModel = inputModel;
@@ -25,6 +26,11 @@ namespace Code.Player{
             _playerModel.OnDied += OnDied;
         }
 
+        ~PlayerController(){
+            _inputModel.OnMove -= OnMove;
+            _playerModel.OnDied -= OnDied;
+        }
+
         private void OnDied(){
             _player.AnimatorParameters.Die = true;
         }
@@ -36,21 +42,29 @@ namespace Code.Player{
         private void OnCollisionWithEnemy(){
             _playerModel.HealthPoints--;
         }
-        
+
         private void OnMove(Vector3 newPosition){
-             _player.MoveTo(newPosition);
+            _targetToMove = newPosition;
+            _move = true;
         }
 
-
-        ~PlayerController(){
-            _inputModel.OnMove -= OnMove;
-            _playerModel.OnDied -= OnDied;
+        public void FixedExecute(float deltaTime){
+            if (_move)
+                if (Vector3.Distance(_targetToMove, _player.Transform.position) > 0.5f){
+                    _player.transform.LookAt(
+                        new Vector3(_targetToMove.x, _player.Transform.position.y, _targetToMove.z));
+                    _player.CharacterController.Move(
+                        (new Vector3(_targetToMove.x, 0, _targetToMove.z) -
+                         _player.transform.position).normalized * (deltaTime * _unitSettings.PlayerSpeed));
+                } else{
+                    _move = false;
+                }
         }
 
         public void Execute(float deltaTime){
-            if (_player.Agent.velocity.sqrMagnitude > Vector3.kEpsilon){
+            if (_player.CharacterController.velocity.sqrMagnitude > Vector3.kEpsilon){
                 _player.AnimatorParameters.Run = true;
-            }   
+            }
         }
     }
 }

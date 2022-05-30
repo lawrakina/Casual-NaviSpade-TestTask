@@ -10,5 +10,7 @@ namespace Code.Data{
         public PlayerView PlayerView;
         [SerializeField]
         public int PlayerHp = 5;
+        [SerializeField]
+        public float PlayerSpeed = 5f;
     }
 }

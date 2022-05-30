@@ -10,7 +10,7 @@ namespace Code.Enemies{
     internal class EnemyController : IExecute{
         private readonly float _timeToNewGoal;
         private EnemyView _view;
-        public Action<EnemyController> OnCollisionOnPlayer;
+        public Action<EnemyController> OnCollisionOnPlayer{ get; set; }
         private float _localTimer = 0;
 
         public EnemyController(Vector3 spawnPoint, EnemyView prefab, float speedMoving,
@@ -26,13 +26,12 @@ namespace Code.Enemies{
             _view.MoveTo(Extentions.GetEmptyPoint());
         }
 
-        private void CollisionOnObject(Collision info){
-            if (info.gameObject.TryGetComponent(out IBonus bonus)){
+        private void CollisionOnObject(GameObject info){
+            if (info.TryGetComponent(out IBonus bonus)){
                 bonus.Destroy();
             }
 
-            if (info.gameObject.TryGetComponent(out IPlayer player)){
-                _view.DestroySelf();
+            if (info.TryGetComponent(out IPlayer player)){
                 player.Damage();
                 OnCollisionOnPlayer?.Invoke(this);
             }
