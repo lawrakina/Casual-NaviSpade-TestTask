@@ -12,6 +12,8 @@ namespace Code.Player{
         private PlayerView _player;
         private Vector3 _targetToMove;
         private bool _move = false;
+        private float _leftTime;
+        private bool _resistant;
 
         public PlayerController(InputModel inputModel, PlayerModel playerModel, UnitSettings unitSettings){
             _inputModel = inputModel;
@@ -40,7 +42,11 @@ namespace Code.Player{
         }
 
         private void OnCollisionWithEnemy(){
-            _playerModel.HealthPoints--;
+            if (!_resistant){
+                _resistant = true;
+                _leftTime = _unitSettings.PlayerTimeResistance;
+                _playerModel.HealthPoints--;
+            }
         }
 
         private void OnMove(Vector3 newPosition){
@@ -62,6 +68,12 @@ namespace Code.Player{
         }
 
         public void Execute(float deltaTime){
+            if (_leftTime > 0){//resistant in process
+                _leftTime -= deltaTime;
+            } else if (_resistant){//resistant is ended
+                _resistant = false;
+            }
+
             if (_player.CharacterController.velocity.sqrMagnitude > Vector3.kEpsilon){
                 _player.AnimatorParameters.Run = true;
             }

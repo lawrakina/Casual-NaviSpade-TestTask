@@ -33,7 +33,8 @@ namespace Code.Enemies{
             _localTimer += deltaTime;
             if (_localTimer > _enemySettings.DeltaTimeBeforeInstantiateBonus){
                 _localTimer = 0;
-                CreateNewEnemy();
+                if(_enemies.Count < _enemySettings.MaxCountEnemies)
+                    CreateNewEnemy();
             }
         }
 
@@ -41,13 +42,7 @@ namespace Code.Enemies{
             var enemyController = new EnemyController(
                 _arealsOfEnemies[Random.Range(0, _arealsOfEnemies.Count)].transform.position,
                 _enemySettings.EnemyPrefab, _enemySettings.SpeedMoving, _enemySettings.TimeToNewGoal);
-            // enemyController.OnCollisionOnPlayer += OnCollisionOnPlayer;
             _enemies.Add(enemyController);
         }
-
-        // private void OnCollisionOnPlayer(EnemyController obj){
-            // obj.OnCollisionOnPlayer -= OnCollisionOnPlayer;
-            // _enemies.Remove(obj);
-        // }
     }
 }

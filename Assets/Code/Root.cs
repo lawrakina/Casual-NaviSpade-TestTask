@@ -21,6 +21,8 @@ namespace Code{
         [SerializeField]
         private InputModel _inputModel;
         [SerializeField]
+        private GameProcessModel _gameModel;
+        [SerializeField]
         private PlayerModel _playerModel;
         [Space]
         [Header("Settings")]
@@ -60,7 +62,7 @@ namespace Code{
              _playerController = new PlayerController(_inputModel, _playerModel, _unitSettings);
              _bonusController = new BonusesController(_bonusSettings);
              _enemiesController = new EnemiesController(_enemySettings, _arealsOfEnemies);
-             _uiController = new UiController(_placeForUi, _uiSettings ,_inputModel, _playerModel);
+             _uiController = new UiController(_placeForUi, _uiSettings , _gameModel,_inputModel, _playerModel);
 
             _executable.Add(_inputController);
             _executable.Add(_playerController);
@@ -73,9 +75,10 @@ namespace Code{
             _enemiesController.Init();
             _uiController.Init();
             
-            _inputModel.OnChangeGameState.Invoke(GameState.Game);
+            _gameModel.OnChangeGameState += OnChangeGameState;
             
-            _inputModel.OnChangeGameState += OnChangeGameState;
+            
+            _gameModel.OnChangeGameState.Invoke(GameState.Game);
         }
 
         private void OnChangeGameState(GameState obj){
@@ -116,7 +119,7 @@ namespace Code{
         }
 
         ~Root(){
-            _inputModel.OnChangeGameState -= OnChangeGameState;
+            _gameModel.OnChangeGameState -= OnChangeGameState;
         }
     }
 }

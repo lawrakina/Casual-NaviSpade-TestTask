@@ -12,5 +12,6 @@ namespace Code.Data{
         public int PlayerHp = 5;
         [SerializeField]
         public float PlayerSpeed = 5f;
+        public float PlayerTimeResistance = 5f;
     }
 }

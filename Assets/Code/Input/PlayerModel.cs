@@ -18,10 +18,11 @@ namespace Code.Input{
                     _healthPoints = MaxHealthPoints;
                 }
 
-                OnChangeHp?.Invoke(value);
                 if (value <= 0){
                     OnDied?.Invoke();
                 }
+
+                OnChangeHp?.Invoke(value);
             }
         }
 
