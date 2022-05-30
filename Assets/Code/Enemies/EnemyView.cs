@@ -1,12 +1,11 @@
 ﻿using System;
-using Code.Units;
 using UnityEngine;
 using UnityEngine.AI;
 
 
 namespace Code.Enemies{
     [RequireComponent(typeof(NavMeshAgent))]
-    public sealed class EnemyView : MonoBehaviour, IMovable{
+    public sealed class EnemyView : MonoBehaviour{
         private Action<GameObject> _collisionOnObject;
         private NavMeshAgent Agent{ get; set; }
 

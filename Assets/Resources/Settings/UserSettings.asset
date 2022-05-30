@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: UserSettings
   m_EditorClassIdentifier: 
   PlayerView: {fileID: -389618272908149977, guid: 2392b8fa855b450409c6d57f81eb3671, type: 3}
+  PlayerHp: 2
+  PlayerSpeed: 5
+  PlayerTimeResistance: 5

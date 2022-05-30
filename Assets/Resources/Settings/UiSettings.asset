@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ab0901ad8347c490753a2f50df8088, type: 3}
   m_Name: UiSettings
   m_EditorClassIdentifier: 
-  StartView: {fileID: 4093424682597702151, guid: e5d1c9d54572a7b45bfcb594db20797c, type: 3}
-  GameView: {fileID: 8307789719435567948, guid: bb608f82d67366346abbc92fac4974a4, type: 3}
+  StartView: {fileID: 4093424682597702151, guid: e3535ce74fafc3340967f9b096201fd5, type: 3}
+  GameView: {fileID: 8307789719435567948, guid: f481c9fc564a2694ebcc7db6ec03624a, type: 3}
   WinView: {fileID: 0}
-  FailView: {fileID: 0}
+  FailView: {fileID: 4041047522520832827, guid: 1da80c305efc8e04582ebccf3f342d8b, type: 3}

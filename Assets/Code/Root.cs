@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Code.Base;
 using Code.Bonuses;
 using Code.Data;
 using Code.Enemies;
@@ -51,6 +52,7 @@ namespace Code{
 
         #endregion
 
+
         private void Awake(){
             _executable = new List<IExecute>();
             _fixedExecutable = new List<IFixedExecute>();
@@ -58,52 +60,47 @@ namespace Code{
 
             _playerModel.Init(maxHp: _unitSettings.PlayerHp);
 
-             _inputController = new InputController(_inputModel);
-             _playerController = new PlayerController(_inputModel, _playerModel, _unitSettings);
-             _bonusController = new BonusesController(_bonusSettings);
-             _enemiesController = new EnemiesController(_enemySettings, _arealsOfEnemies);
-             _uiController = new UiController(_placeForUi, _uiSettings , _gameModel,_inputModel, _playerModel);
+            _uiController = new UiController(_placeForUi, _uiSettings, _gameModel, _playerModel);
 
-            _executable.Add(_inputController);
-            _executable.Add(_playerController);
-            _fixedExecutable.Add(_playerController);
-            _executable.Add(_bonusController);
-            _executable.Add(_enemiesController);
-
-            _playerController.Init();
-            _bonusController.Init();
-            _enemiesController.Init();
-            _uiController.Init();
-            
             _gameModel.OnChangeGameState += OnChangeGameState;
-            
-            
-            _gameModel.OnChangeGameState.Invoke(GameState.Game);
+            _uiController.Init();
+
+            _gameModel.OnChangeGameState.Invoke(GameState.StartWindow);
         }
 
         private void OnChangeGameState(GameState obj){
-            // switch (obj){
-            //     case GameState.None:
-            //         break;
-            //     case GameState.StartWindow:
-            //         _inputController?.Dispose();
-            //         _playerController?.Dispose();
-            //         _bonusController?.Dispose();
-            //         _enemiesController?.Dispose();
-            //         break;
-            //     case GameState.Game:
-            //         _inputController.Init();
-            //         _playerController.Init();
-            //         _bonusController.Init();
-            //         _enemiesController.Init();
-            //         break;
-            //     case GameState.WinWindow:
-            //         break;
-            //     case GameState.FailWindow:
-            //         break;
-            //     default:
-            //         throw new ArgumentOutOfRangeException(nameof(obj), obj, null);
-            // }
+            switch (obj){
+                case GameState.None:
+                    break;
+                case GameState.StartWindow:
+                    Debug.Log($"Change game state:{obj}");
+                    break;
+                case GameState.Game:
+                    _inputController = new InputController(_inputModel);
+                    _playerController = new PlayerController(_gameModel, _inputModel, _playerModel, _unitSettings);
+                    _bonusController = new BonusesController(_bonusSettings);
+                    _enemiesController = new EnemiesController(_enemySettings, _arealsOfEnemies);
+
+                    _executable.Add(_inputController);
+                    _executable.Add(_playerController);
+                    _fixedExecutable.Add(_playerController);
+                    _executable.Add(_bonusController);
+                    _executable.Add(_enemiesController);
+
+                    _playerController.Init();
+                    _bonusController.Init();
+                    _enemiesController.Init();
+                    break;
+                case GameState.WinWindow:
+                    break;
+                case GameState.FailWindow:
+                    _playerController?.Clean();
+                    _bonusController?.Clean();
+                    _enemiesController?.Clean();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(obj), obj, null);
+            }
         }
 
         private void Update(){

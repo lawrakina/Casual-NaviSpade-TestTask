@@ -1,4 +1,5 @@
 ﻿using System;
+using Code.Base;
 using Code.Extensions;
 using Code.Input;
 using Code.Player;
@@ -25,9 +26,9 @@ namespace Code.Bonuses{
             }
         }
 
-        private void Destroy(){
-            _view.DestroySelf();
+        public void Destroy(){
             OnDestroy?.Invoke(this);
+            GameObject.Destroy(_view.gameObject);
         }
 
         public void Execute(float deltaTime){

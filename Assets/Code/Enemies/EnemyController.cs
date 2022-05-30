@@ -1,4 +1,5 @@
 ﻿using System;
+using Code.Base;
 using Code.Bonuses;
 using Code.Extensions;
 using Code.Input;
@@ -43,6 +44,10 @@ namespace Code.Enemies{
                 _localTimer = 0;
                 SetDestination();
             }
+        }
+
+        public void Destroy(){
+            GameObject.Destroy(_view.gameObject);
         }
     }
 }

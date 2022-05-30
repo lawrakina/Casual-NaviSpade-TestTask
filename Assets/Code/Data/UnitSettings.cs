@@ -1,5 +1,4 @@
 ﻿using Code.Player;
-using Code.Units;
 using UnityEngine;
 
 
@@ -9,7 +8,7 @@ namespace Code.Data{
         [SerializeField]
         public PlayerView PlayerView;
         [SerializeField]
-        public int PlayerHp = 5;
+        public int PlayerHp = 3;
         [SerializeField]
         public float PlayerSpeed = 5f;
         public float PlayerTimeResistance = 5f;

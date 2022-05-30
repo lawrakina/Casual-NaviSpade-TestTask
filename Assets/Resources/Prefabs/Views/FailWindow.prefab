@@ -400,6 +400,7 @@ GameObject:
   - component: {fileID: 555562890091495076}
   - component: {fileID: 555562890091495074}
   - component: {fileID: 555562890091495077}
+  - component: {fileID: 4041047522520832827}
   m_Layer: 5
   m_Name: FailWindow
   m_TagString: Untagged
@@ -468,6 +469,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4041047522520832827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555562890091495079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f252484bbb414e40b430787bb7e4070b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _score: {fileID: 555562890577972746}
+  _startButton: {fileID: 555562889454313610}
 --- !u!1 &555562890577972748
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,6 @@
 ﻿using Code.Ui;
+using Code.Ui.Fail;
+using Code.Ui.Game;
 using UnityEngine;
 
 

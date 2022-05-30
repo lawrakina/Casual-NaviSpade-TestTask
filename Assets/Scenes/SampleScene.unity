@@ -612,6 +612,7 @@ MonoBehaviour:
   _uiSettings: {fileID: 11400000, guid: 3faeeb585e0bc29498eb61783855b7eb, type: 2}
   _placeForUi: {fileID: 1138324617}
   _inputModel: {fileID: 11400000, guid: 22bc13a829efbb84485628b395622813, type: 2}
+  _gameModel: {fileID: 11400000, guid: df915295ca28fbe4fb8edf31bd78cfd8, type: 2}
   _playerModel: {fileID: 11400000, guid: 18b46659b1c69644696b6d9316a9b99d, type: 2}
   _unitSettings: {fileID: 11400000, guid: 8b35b12e2e64c0c4396e32c75a0eecb3, type: 2}
   _levelSettings: {fileID: 11400000, guid: a0f090c683d4c484ba5936ccec52fe6c, type: 2}

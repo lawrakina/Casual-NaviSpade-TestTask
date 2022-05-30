@@ -7,12 +7,13 @@ namespace Code.Input{
     public class PlayerModel : ScriptableObject{
         private int _healthPoints;
         public Action<int> OnChangeHp = delegate(int i){ };
-        public Action OnDied = delegate{  };
+        public Action<int> OnGetBonus = delegate(int i){ };
+        public Action OnDied = delegate{ };
+        private int _bonuses;
         public int MaxHealthPoints{ get; private set; }
         public int HealthPoints{
             get => _healthPoints;
             set{
-                Debug.Log($"Change HP:{value}");
                 _healthPoints = value;
                 if (value >= MaxHealthPoints){
                     _healthPoints = MaxHealthPoints;
@@ -25,10 +26,18 @@ namespace Code.Input{
                 OnChangeHp?.Invoke(value);
             }
         }
+        public int Bonuses{
+            get => _bonuses;
+            set{
+                _bonuses = value;
+                OnGetBonus?.Invoke(value);
+            }
+        }
 
         public void Init(int maxHp){
             MaxHealthPoints = maxHp;
             HealthPoints = maxHp;
+            _bonuses = 0;
         }
     }
 }

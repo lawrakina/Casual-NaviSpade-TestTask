@@ -8,12 +8,4 @@ namespace Code.Input{
         public Action<Vector3> OnMove = _ => { };
         
     }
-
-    public enum GameState{
-        None,
-        StartWindow,
-        Game,
-        WinWindow,
-        FailWindow
-    }
 }

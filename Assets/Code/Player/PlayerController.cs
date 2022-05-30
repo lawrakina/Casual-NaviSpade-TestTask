@@ -1,11 +1,14 @@
-﻿using Code.Data;
+﻿using Code.Base;
+using Code.Bonuses;
+using Code.Data;
 using Code.Extensions;
 using Code.Input;
 using UnityEngine;
 
 
 namespace Code.Player{
-    public sealed class PlayerController : IExecute, IFixedExecute{
+    public sealed class PlayerController : BaseController, IExecute, IFixedExecute, ICleaned{
+        private readonly GameProcessModel _gameModel;
         private readonly InputModel _inputModel;
         private readonly PlayerModel _playerModel;
         private readonly UnitSettings _unitSettings;
@@ -15,29 +18,42 @@ namespace Code.Player{
         private float _leftTime;
         private bool _resistant;
 
-        public PlayerController(InputModel inputModel, PlayerModel playerModel, UnitSettings unitSettings){
+        public PlayerController(GameProcessModel gameModel, InputModel inputModel, PlayerModel playerModel,
+            UnitSettings unitSettings){
+            _gameModel = gameModel;
             _inputModel = inputModel;
             _playerModel = playerModel;
             _unitSettings = unitSettings;
+            Off();
         }
 
         public void Init(){
+            On();
             _player = Extentions.SpawnObject(Extentions.GetEmptyPoint(), _unitSettings.PlayerView);
             _player.Init(OnGetUpBonus, OnCollisionWithEnemy);
             _inputModel.OnMove += OnMove;
             _playerModel.OnDied += OnDied;
+            _playerModel.HealthPoints = _unitSettings.PlayerHp;
         }
 
         ~PlayerController(){
+            Off();
             _inputModel.OnMove -= OnMove;
             _playerModel.OnDied -= OnDied;
         }
 
+        public void Clean(){
+            Off();
+            GameObject.Destroy(_player.gameObject);
+        }
+
         private void OnDied(){
-            _player.AnimatorParameters.Die = true;
+            Off();
+            _gameModel.OnChangeGameState.Invoke(GameState.FailWindow);
         }
 
         private void OnGetUpBonus(){
+            _playerModel.Bonuses++;
             _playerModel.HealthPoints++;
         }
 
@@ -55,6 +71,7 @@ namespace Code.Player{
         }
 
         public void FixedExecute(float deltaTime){
+            if(!IsOn) return;
             if (_move)
                 if (Vector3.Distance(_targetToMove, _player.Transform.position) > 0.5f){
                     _player.transform.LookAt(
@@ -68,6 +85,7 @@ namespace Code.Player{
         }
 
         public void Execute(float deltaTime){
+            if(!IsOn) return;
             if (_leftTime > 0){//resistant in process
                 _leftTime -= deltaTime;
             } else if (_resistant){//resistant is ended
